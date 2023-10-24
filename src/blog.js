@@ -1,3 +1,4 @@
+// List of Blog types
 var blogs = [
     {
         title: "Blog 1",
@@ -12,7 +13,9 @@ var blogs = [
         slug: "blog-2",
     },
 ];
+// Get blog-container from blog.html
 var blogContainer = document.getElementsByClassName("blog-container");
+// Create blog entires using blogs list
 blogs.forEach(function (blog) {
     var blogElement = document.createElement("div");
     blogElement.innerHTML = "\n  <h2>".concat(blog.title, "</h2>\n  <p>Date: ").concat(blog.date, "</p>\n  <p>").concat(blog.description, "</p>\n  <a href=\"").concat(blog.slug, ".html\">See more</a>\n");

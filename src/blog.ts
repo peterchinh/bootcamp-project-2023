@@ -5,6 +5,7 @@ type Blog = {
   slug: string;
 };
 
+// List of Blog types
 const blogs: Blog[] = [
   {
     title: "Blog 1",
@@ -20,9 +21,11 @@ const blogs: Blog[] = [
   },
 ];
 
+// Get blog-container from blog.html
 const blogContainer: HTMLCollectionOf<Element> =
   document.getElementsByClassName("blog-container");
 
+// Create blog entires using blogs list
 blogs.forEach((blog) => {
   const blogElement = document.createElement("div");
   blogElement.innerHTML = `
