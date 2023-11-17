@@ -1,24 +1,47 @@
-import styles from './page.module.css'
-import Image from 'next/image'
-import Link from 'next/link'
+// import styles from './page.module.css'
+// import Image from 'next/image'
+// import Link from 'next/link'
+import Project from "@/database/projectSchema"
+import ProjectList from '@/components/projectList'
+import connectDB from '@/helpers/db'
 
-export default function Portfolio() {
+async function getProjects() {
+  await connectDB();
+
+  try {
+    // query for all projects and sort by name
+    const projects = await Project.find().sort({ title: 1}).orFail();
+    // send a response as the projects as the message
+    return projects;
+  } catch (err) {
+    return null;
+  }
+}
+
+export default async function Portfolio() {
+  const projects = await getProjects();
+  // check if the response was null
+  if (projects == null) {
+    return (
+      <main>
+        <h1 className="page-title">Portfolio</h1>
+        <p>No projects at the moment.</p>
+      </main>
+    )
+  }
+  else {
     return (
         <main>
         <h1 className="page-title">Portfolio</h1>
-        <div className={styles.project}>
-          <Link href="/"
-            >
-          <Image src={'/pic_of_home.jpg'} width={1280} height={720} alt="pic of home"></Image>
-          </Link>
-          <div className={styles.projectdetails}>
-            <p className="project-name">Peter's Personal Website</p>
-            <p className="project-description">
-              A personal website created using the Hack4Impact starter pack!
-            </p>
-            <Link href="/">Learn More</Link>
-          </div>
-        </div>
+        {projects.map((project) => (
+          <ProjectList // call the project component
+            title={project.title}
+            description={project.description}
+            image={project.image}
+            link={project.link} 
+            slug={""}          />
+        ))}
       </main>
     )
+  }
 }
