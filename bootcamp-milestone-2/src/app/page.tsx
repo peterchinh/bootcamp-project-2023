@@ -1,10 +1,27 @@
 
 import styles from './page.module.css'
 import Image from 'next/image'
-import blogs from './blogData'
+// import blogs from './blogData'
 import BlogPreview from '@/components/blogPreview'
+import connectDB from '@/helpers/db';
+import Blog from '@/database/blogSchema';
 
-export default function Home() {
+async function getBlogs() {
+  await connectDB(); // function from db.ts before
+
+  try {
+    // query for all blogs and sort by date
+    const blogs = await Blog.find().sort({ date: -1 }).orFail();
+    // send a response as the blogs as the message
+    return blogs;
+  } catch (err) {
+    return null;
+  }
+}
+
+export default async function Home() {
+  const blogs = await getBlogs();
+
   return (
   <div>
     <main>
@@ -41,14 +58,16 @@ export default function Home() {
           </div>
         </div>
       </div>
-    {blogs.map(blog => 
+    {blogs && blogs.map(blog => 
       <BlogPreview // This is how we call the component
       
-      title={blog.title}
-      description={blog.description}
-      date={blog.date}
-      slug={blog.slug}
-      />
+        title={blog.title}
+        description={blog.description}
+        date={blog.date}
+        slug={blog.slug} 
+        content={''} 
+        comments={[]} 
+        image={''}      />
       )}
       </main>
   </div>
