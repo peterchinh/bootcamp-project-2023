@@ -1,0 +1,33 @@
+.commentSection {
+    width: 80%;
+    display: flex;
+    flex-direction: column; /* Stack user and date vertically, comment text on next line */
+    margin-bottom: 20px; /* Add spacing between comments */
+  }
+  
+  .comment {
+    width: fit-content;
+    outline: 2px solid #ccc; /* Add an outline with a 2px width and a light gray color */
+    padding: 10px; /* Add some padding to visually separate the outline from the content */
+    margin-bottom: 20px;
+  }
+  
+  .userDate {
+    max-width: fit-content;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+  }
+  
+  .user {
+    font-weight: bold;
+    margin-right: 20px;
+  }
+  
+  .date {
+    color: gray;
+  }
+  
+  .commentText {
+    max-width: fit-content;
+  }
