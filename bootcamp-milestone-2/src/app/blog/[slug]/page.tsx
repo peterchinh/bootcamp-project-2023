@@ -2,24 +2,30 @@ import { IComment } from "@/database/blogSchema";
 import styles from "./page.module.css";
 import Image from "next/image";
 import Link from "next/link";
-
-type Props = {
-  params: { slug: string };
-};
+import Comment from "@/components/comment";
 
 async function getBlog(slug: string) {
-  const res = await fetch(`http://localhost:3000/api/blog/${slug}`, {
-    cache: "no-store",
-  });
-  if (res.ok) {
-    return await res.json();
-  } else {
+  try {
+    const res = await fetch(`http://localhost:3000/api/blog/${slug}`, {
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch blog");
+    }
+
+    return res.json();
+  } catch (err: unknown) {
+    console.log(`error: ${err}`);
     return null;
   }
 }
 
-export default async function BlogPage({ params: { slug } }: Props) {
+// @ts-ignore
+export default async function Blog({ params }: { slug: string }) {
+  const slug = params.slug;
   const blog = await getBlog(slug);
+  // render blog if fetched successfully
   if (blog != null) {
     console.log(blog.date);
     return (
@@ -39,17 +45,16 @@ export default async function BlogPage({ params: { slug } }: Props) {
         <div className={styles.commentSection}>
           <h2>Comments</h2>
           {blog.comments.map((comment: IComment, index: number) => (
-            <div key={index} className={styles.comment}>
-              <div className={styles.userDate}>
-                <div className={styles.user}>{comment.user}</div>
-                <div className={styles.date}>
-                  {new Date(comment.time).toLocaleDateString()}
-                </div>
-              </div>
-              <div className={styles.commentText}>{comment.comment}</div>
-            </div>
+            <Comment key={index} comment={comment}
+            />
           ))}
         </div>
+      </main>
+    );
+  } else { // Gracefully handle unkown slugs and null blog when fetched
+    return (
+      <main>
+        <h1>Blog not found</h1>
       </main>
     );
   }
