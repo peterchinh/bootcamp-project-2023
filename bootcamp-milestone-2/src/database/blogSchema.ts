@@ -30,7 +30,7 @@ const blogSchema = new Schema<IBlog>({
   date: { type: Date, required: false, default: new Date() },
   description: { type: String, required: true },
   content: { type: String, required: true },
-  comments: { type: Schema.Types.Mixed, required: true },
+  comments: [{ type: commentSchema, required: true }],
   image: { type: String, required: false },
 });
 
