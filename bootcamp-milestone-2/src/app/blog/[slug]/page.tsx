@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import Comment from "@/components/comment";
+import AddComment from "@/components/addComment";
 
 async function getBlog(slug: string) {
   try {
@@ -44,14 +45,15 @@ export default async function Blog({ params }: { slug: string }) {
         </div>
         <div className={styles.commentSection}>
           <h2>Comments</h2>
+          <AddComment slug={`blog/${slug}/comment`} />
           {blog.comments.map((comment: IComment, index: number) => (
-            <Comment key={index} comment={comment}
-            />
+            <Comment key={index} comment={comment} />
           ))}
         </div>
       </main>
     );
-  } else { // Gracefully handle unkown slugs and null blog when fetched
+  } else {
+    // Gracefully handle unkown slugs and null blog when fetched
     return (
       <main>
         <h1>Blog not found</h1>
