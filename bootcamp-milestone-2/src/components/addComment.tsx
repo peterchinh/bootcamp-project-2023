@@ -18,7 +18,7 @@ export default function AddComment({ slug }: { slug: string }) {
             const data = { user, comment }; // store user and comment as data to send to api
             try {
                 // Send a POST request to the specified API endpoint with the given data
-                const res = await fetch(`http://localhost:3000/api/${url}`, {
+                const res = await fetch(`${process.env.API_URL}/api/${url}`, {
                     method: 'POST',
                     body: JSON.stringify(data),
                     cache: "no-store",

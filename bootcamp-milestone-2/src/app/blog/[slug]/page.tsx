@@ -7,7 +7,7 @@ import AddComment from "@/components/addComment";
 
 async function getBlog(slug: string) {
   try {
-    const res = await fetch(`http://localhost:3000/api/blog/${slug}`, {
+    const res = await fetch(`${process.env.API_URL}/api/blog/${slug}`, {
       cache: "no-store",
     });
 
