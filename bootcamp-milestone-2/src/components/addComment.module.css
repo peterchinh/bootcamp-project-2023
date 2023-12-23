@@ -1,0 +1,34 @@
+.addComment {
+    display:flex;
+    flex-direction: column;
+    width: 100%;
+    outline: 2px solid #ccc; /* Add an outline with a 2px width and a light gray color */
+    padding: 10px; /* Add some padding to visually separate the outline from the content */
+    margin-bottom: 20px;
+  }
+
+.user {
+    border:none;
+    border-bottom: 1px solid black; /* Add an bottom border for underline effect */
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.comment {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.reply {
+    font-size: 16px;
+    width: 10%;
+    height: 30px;
+    align-self: center;
+    background-color: #0383d8;
+    border: none;
+    color: white;
+    text-align: center;
+}
+.reply:hover {
+    background-color: #3eb2ff; /* Change color when hovering button */
+}
