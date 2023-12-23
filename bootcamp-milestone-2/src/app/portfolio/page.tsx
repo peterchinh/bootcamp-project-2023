@@ -1,18 +1,26 @@
-import Project from "@/database/projectSchema"
+import Project, { IProject } from "@/database/projectSchema"
 import ProjectList from '@/components/projectList'
 import connectDB from '@/helpers/db'
 
 async function getProjects() {
   await connectDB();
-
-  try {
-    // query for all projects and sort by name
-    const projects = await Project.find().sort({ title: 1}).orFail();
-    // send a response as the projects as the message
-    return projects;
-  } catch (err) {
-    return null;
-  }
+    try {
+      const res = await fetch(
+        `https://bootcamp-project-2023-eight.vercel.app/api/project/`,
+        {
+          cache: "no-store",
+        }
+      );
+  
+      if (!res.ok) {
+        throw new Error("Failed to fetch blog");
+      }
+  
+      return res.json();
+    } catch (err: unknown) {
+      console.log(`error: ${err}`);
+      return null;
+    }
 }
 
 export default async function Portfolio() {
@@ -30,7 +38,7 @@ export default async function Portfolio() {
     return (
         <main>
         <h1 className="page-title">Portfolio</h1>
-        {projects.map((project) => (
+        {projects.map((project: IProject) => (
           <ProjectList // call the project component
             title={project.title}
             description={project.description}

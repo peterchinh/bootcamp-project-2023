@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
   export async function GET(req: NextRequest) {
     await connectDB(); // function from db.ts before
     try {
-      const project = await projectSchema.find().orFail();
+      const project = await projectSchema.find().sort({ title: 1}).orFail();
       return NextResponse.json(project);
     } catch (err) {
       return NextResponse.json("Project not found.", { status: 404 });
