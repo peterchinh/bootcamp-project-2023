@@ -1,6 +1,3 @@
-// import styles from './page.module.css'
-// import Image from 'next/image'
-// import Link from 'next/link'
 import Project from "@/database/projectSchema"
 import ProjectList from '@/components/projectList'
 import connectDB from '@/helpers/db'
@@ -38,8 +35,9 @@ export default async function Portfolio() {
             title={project.title}
             description={project.description}
             image={project.image}
-            link={project.link} 
-            slug={""}          />
+            link={project.link}
+            slug={project.slug} 
+            comments={project.comments}          />
         ))}
       </main>
     )
