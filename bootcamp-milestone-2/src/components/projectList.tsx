@@ -1,9 +1,14 @@
 import React from "react";
 import style from "./projectList.module.css"
-import type { IProject } from "@/database/projectSchema";
+import type { IProject } from "@/database/projectSchema"
+import type { IComment } from "@/database/blogSchema"
+import Comment from "@/components/comment"
+import AddComment from "./addComment";
 import Link from "next/link";
 import Image
  from "next/image";
+
+ // Component to render individual projects for portfolio 
 export default function ProjectList(props: IProject) {
     return (
         <div className={style.project}>
@@ -17,6 +22,12 @@ export default function ProjectList(props: IProject) {
             </p>
             <Link href={props.link}>Learn More</Link>
           </div>
+          <h2>Comments</h2>
+          <AddComment slug={`project/${props.slug}/comment`} />
+          {props.comments.map((comment: IComment, index: number) => (
+            <Comment key={index} comment={comment}
+            />
+          ))}
         </div>
     );
 }
