@@ -22,8 +22,7 @@ async function getBlog(slug: string) {
   }
 }
 
-// @ts-ignore
-export default async function Blog({ params }: { slug: string }) {
+export default async function Blog({ params }: { params: { slug: string } }) {
   const slug = params.slug;
   const blog = await getBlog(slug);
   // render blog if fetched successfully
