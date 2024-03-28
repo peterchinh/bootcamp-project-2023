@@ -1,26 +1,25 @@
-import Project, { IProject } from "@/database/projectSchema"
-import ProjectList from '@/components/projectList'
-import connectDB from '@/helpers/db'
+import Project, { IProject } from "@/database/projectSchema";
+import ProjectList from "@/components/projectList";
+import connectDB from "@/helpers/db";
 
 async function getProjects() {
-  await connectDB();
-    try {
-      const res = await fetch(
-        `https://bootcamp-project-2023-eight.vercel.app/api/project/`,
-        {
-          cache: "no-store",
-        }
-      );
-  
-      if (!res.ok) {
-        throw new Error("Failed to fetch blog");
+  try {
+    const res = await fetch(
+      `https://bootcamp-project-2023-eight.vercel.app/api/project/`,
+      {
+        cache: "no-store",
       }
-  
-      return res.json();
-    } catch (err: unknown) {
-      console.log(`error: ${err}`);
-      return null;
+    );
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch blog");
     }
+
+    return res.json();
+  } catch (err: unknown) {
+    console.log(`error: ${err}`);
+    return null;
+  }
 }
 
 export default async function Portfolio() {
@@ -32,11 +31,10 @@ export default async function Portfolio() {
         <h1 className="page-title">Portfolio</h1>
         <p>No projects at the moment.</p>
       </main>
-    )
-  }
-  else {
+    );
+  } else {
     return (
-        <main>
+      <main>
         <h1 className="page-title">Portfolio</h1>
         {projects.map((project: IProject) => (
           <ProjectList // call the project component
@@ -44,10 +42,11 @@ export default async function Portfolio() {
             description={project.description}
             image={project.image}
             link={project.link}
-            slug={project.slug} 
-            comments={project.comments}          />
+            slug={project.slug}
+            comments={project.comments}
+          />
         ))}
       </main>
-    )
+    );
   }
 }
